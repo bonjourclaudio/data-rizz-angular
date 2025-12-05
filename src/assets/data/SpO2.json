@@ -1,270 +1,270 @@
 [
   {
-    "timestamp": 4946,
-    "value": 51
-  },
-  {
-    "timestamp": 4947,
-    "value": 51
-  },
-  {
-    "timestamp": 4948,
-    "value": 52
-  },
-  {
-    "timestamp": 4949,
-    "value": 51
-  },
-  {
-    "timestamp": 4950,
-    "value": 52
-  },
-  {
-    "timestamp": 4951,
-    "value": 51
-  },
-  {
-    "timestamp": 4952,
-    "value": 51
-  },
-  {
-    "timestamp": 4953,
-    "value": 50
-  },
-  {
-    "timestamp": 4954,
-    "value": 51
-  },
-  {
-    "timestamp": 4955,
-    "value": 52
-  },
-  {
-    "timestamp": 4956,
-    "value": 53
-  },
-  {
-    "timestamp": 4957,
-    "value": 53
-  },
-  {
-    "timestamp": 4958,
-    "value": 53
-  },
-  {
-    "timestamp": 4959,
-    "value": 54
-  },
-  {
-    "timestamp": 4960,
-    "value": 54
-  },
-  {
-    "timestamp": 4961,
-    "value": 55
-  },
-  {
-    "timestamp": 4962,
-    "value": 54
-  },
-  {
-    "timestamp": 4963,
-    "value": 54
-  },
-  {
-    "timestamp": 4964,
-    "value": 53
-  },
-  {
-    "timestamp": 4965,
-    "value": 52
-  },
-  {
-    "timestamp": 4966,
-    "value": 52
-  },
-  {
-    "timestamp": 4967,
-    "value": 52
-  },
-  {
-    "timestamp": 4968,
-    "value": 51
-  },
-  {
-    "timestamp": 4969,
-    "value": 51
-  },
-  {
-    "timestamp": 4970,
-    "value": 51
-  },
-  {
-    "timestamp": 4971,
-    "value": 50
-  },
-  {
-    "timestamp": 4972,
-    "value": 51
-  },
-  {
-    "timestamp": 4973,
-    "value": 51
-  },
-  {
-    "timestamp": 4974,
-    "value": 52
-  },
-  {
-    "timestamp": 4975,
-    "value": 52
-  },
-  {
-    "timestamp": 4976,
-    "value": 52
-  },
-  {
-    "timestamp": 4977,
-    "value": 51
-  },
-  {
-    "timestamp": 4978,
-    "value": 52
-  },
-  {
-    "timestamp": 4979,
-    "value": 52
-  },
-  {
-    "timestamp": 4980,
-    "value": 52
-  },
-  {
-    "timestamp": 4981,
-    "value": 53
-  },
-  {
-    "timestamp": 4982,
-    "value": 54
-  },
-  {
-    "timestamp": 4983,
-    "value": 53
-  },
-  {
-    "timestamp": 4984,
-    "value": 53
-  },
-  {
-    "timestamp": 4985,
-    "value": 53
-  },
-  {
-    "timestamp": 4986,
-    "value": 53
-  },
-  {
-    "timestamp": 4987,
-    "value": 54
-  },
-  {
-    "timestamp": 4988,
-    "value": 54
-  },
-  {
-    "timestamp": 4989,
-    "value": 53
-  },
-  {
-    "timestamp": 4990,
-    "value": 52
-  },
-  {
-    "timestamp": 4991,
-    "value": 52
-  },
-  {
-    "timestamp": 4992,
-    "value": 51
-  },
-  {
-    "timestamp": 4993,
-    "value": 50
-  },
-  {
-    "timestamp": 4994,
-    "value": 50
-  },
-  {
-    "timestamp": 4995,
-    "value": 49
-  },
-  {
-    "timestamp": 4996,
-    "value": 49
-  },
-  {
-    "timestamp": 4997,
-    "value": 48
-  },
-  {
-    "timestamp": 4998,
-    "value": 47
-  },
-  {
-    "timestamp": 4999,
-    "value": 46
-  },
-  {
-    "timestamp": 5000,
+    "timestamp": 5285,
     "value": 45
   },
   {
-    "timestamp": 5001,
+    "timestamp": 5286,
     "value": 44
   },
   {
-    "timestamp": 5002,
+    "timestamp": 5287,
     "value": 45
   },
   {
-    "timestamp": 5003,
-    "value": 46
-  },
-  {
-    "timestamp": 5004,
-    "value": 46
-  },
-  {
-    "timestamp": 5005,
+    "timestamp": 5288,
     "value": 45
   },
   {
-    "timestamp": 5006,
-    "value": 46
+    "timestamp": 5289,
+    "value": 44
   },
   {
-    "timestamp": 5007,
+    "timestamp": 5290,
     "value": 45
   },
   {
-    "timestamp": 5008,
-    "value": 45
-  },
-  {
-    "timestamp": 5009,
+    "timestamp": 5291,
     "value": 46
   },
   {
-    "timestamp": 5010,
+    "timestamp": 5292,
     "value": 46
   },
   {
-    "timestamp": 5011,
+    "timestamp": 5293,
     "value": 46
   },
   {
-    "timestamp": 5012,
+    "timestamp": 5294,
     "value": 47
+  },
+  {
+    "timestamp": 5295,
+    "value": 48
+  },
+  {
+    "timestamp": 5296,
+    "value": 47
+  },
+  {
+    "timestamp": 5297,
+    "value": 47
+  },
+  {
+    "timestamp": 5298,
+    "value": 48
+  },
+  {
+    "timestamp": 5299,
+    "value": 47
+  },
+  {
+    "timestamp": 5300,
+    "value": 47
+  },
+  {
+    "timestamp": 5301,
+    "value": 46
+  },
+  {
+    "timestamp": 5302,
+    "value": 47
+  },
+  {
+    "timestamp": 5303,
+    "value": 47
+  },
+  {
+    "timestamp": 5304,
+    "value": 47
+  },
+  {
+    "timestamp": 5305,
+    "value": 47
+  },
+  {
+    "timestamp": 5306,
+    "value": 48
+  },
+  {
+    "timestamp": 5307,
+    "value": 49
+  },
+  {
+    "timestamp": 5308,
+    "value": 49
+  },
+  {
+    "timestamp": 5309,
+    "value": 50
+  },
+  {
+    "timestamp": 5310,
+    "value": 51
+  },
+  {
+    "timestamp": 5311,
+    "value": 52
+  },
+  {
+    "timestamp": 5312,
+    "value": 51
+  },
+  {
+    "timestamp": 5313,
+    "value": 51
+  },
+  {
+    "timestamp": 5314,
+    "value": 52
+  },
+  {
+    "timestamp": 5315,
+    "value": 51
+  },
+  {
+    "timestamp": 5316,
+    "value": 52
+  },
+  {
+    "timestamp": 5317,
+    "value": 52
+  },
+  {
+    "timestamp": 5318,
+    "value": 51
+  },
+  {
+    "timestamp": 5319,
+    "value": 51
+  },
+  {
+    "timestamp": 5320,
+    "value": 50
+  },
+  {
+    "timestamp": 5321,
+    "value": 49
+  },
+  {
+    "timestamp": 5322,
+    "value": 48
+  },
+  {
+    "timestamp": 5323,
+    "value": 49
+  },
+  {
+    "timestamp": 5324,
+    "value": 48
+  },
+  {
+    "timestamp": 5325,
+    "value": 48
+  },
+  {
+    "timestamp": 5326,
+    "value": 47
+  },
+  {
+    "timestamp": 5327,
+    "value": 48
+  },
+  {
+    "timestamp": 5328,
+    "value": 49
+  },
+  {
+    "timestamp": 5329,
+    "value": 49
+  },
+  {
+    "timestamp": 5330,
+    "value": 49
+  },
+  {
+    "timestamp": 5331,
+    "value": 48
+  },
+  {
+    "timestamp": 5332,
+    "value": 49
+  },
+  {
+    "timestamp": 5333,
+    "value": 49
+  },
+  {
+    "timestamp": 5334,
+    "value": 48
+  },
+  {
+    "timestamp": 5335,
+    "value": 49
+  },
+  {
+    "timestamp": 5336,
+    "value": 49
+  },
+  {
+    "timestamp": 5337,
+    "value": 49
+  },
+  {
+    "timestamp": 5338,
+    "value": 48
+  },
+  {
+    "timestamp": 5339,
+    "value": 49
+  },
+  {
+    "timestamp": 5340,
+    "value": 49
+  },
+  {
+    "timestamp": 5341,
+    "value": 49
+  },
+  {
+    "timestamp": 5342,
+    "value": 50
+  },
+  {
+    "timestamp": 5343,
+    "value": 51
+  },
+  {
+    "timestamp": 5344,
+    "value": 51
+  },
+  {
+    "timestamp": 5345,
+    "value": 52
+  },
+  {
+    "timestamp": 5346,
+    "value": 53
+  },
+  {
+    "timestamp": 5347,
+    "value": 53
+  },
+  {
+    "timestamp": 5348,
+    "value": 53
+  },
+  {
+    "timestamp": 5349,
+    "value": 52
+  },
+  {
+    "timestamp": 5350,
+    "value": 51
+  },
+  {
+    "timestamp": 5351,
+    "value": 50
   }
 ]
