@@ -12,7 +12,11 @@ export class GraphComponent implements OnDestroy, OnChanges, AfterViewInit {
   @Input() vitalName: string | undefined = '';
   @Input() color: string | undefined = '#00b2cf';
   @Input() size: string | undefined = 'sm';
+  @Input() timeWindowSeconds: number | undefined = 30;
+  @Input() timeOffsetSeconds: number | undefined = 0;
+  @Input() live: boolean | undefined = true;
   @Output() valueChange: EventEmitter<number> = new EventEmitter<number>();
+  @Output() centerValueChange: EventEmitter<number> = new EventEmitter<number>();
 
   @ViewChild('chart', { static: true }) chartContainer!: ElementRef;
 
@@ -50,6 +54,16 @@ export class GraphComponent implements OnDestroy, OnChanges, AfterViewInit {
     if (changes['size'] && !changes['size'].firstChange) {
       this.createChart(true);
     }
+    if ((changes['timeWindowSeconds'] || changes['timeOffsetSeconds'] || changes['live']) && !changes['vitalName']) {
+      // re-render static window when controls change
+      if (this.samples && this.samples.length) {
+        if (this.live) {
+          this.startAnimation();
+        } else {
+          this.renderStaticWindow();
+        }
+      }
+    }
   }
 
   ngOnDestroy(): void {
@@ -81,12 +95,77 @@ export class GraphComponent implements OnDestroy, OnChanges, AfterViewInit {
         if (this.samples.length > 1) {
           this.sampleInterval = Math.abs(this.samples[1].timestamp - this.samples[0].timestamp) || 1;
         }
-        this.startAnimation();
+        if (this.live) {
+          this.startAnimation();
+        } else {
+          this.renderStaticWindow();
+        }
       },
       error: () => {
         // silent
       }
     });
+  }
+
+  private renderStaticWindow(): void {
+    if (!this.samples || this.samples.length === 0) return;
+    // determine window
+    this.windowSec = this.timeWindowSeconds || this.windowSec;
+    const offset = Number(this.timeOffsetSeconds) || 0;
+    // endTime is last sample timestamp minus offset
+    const lastTs = this.samples[this.samples.length - 1].timestamp;
+    const endTime = lastTs - offset;
+    const startTime = endTime - this.windowSec;
+    this.currentTime = endTime;
+    // select samples in [startTime, endTime]
+    this.data = this.samples.map(s => ({ t: s.timestamp, value: s.value })).filter(p => p.t >= startTime && p.t <= endTime);
+    if (this.data.length === 0) {
+      // fallback: take last N
+      const n = Math.min(this.samples.length, Math.ceil(this.windowSec / this.sampleInterval));
+      const arr = this.samples.slice(-n);
+      this.data = arr.map(s => ({ t: s.timestamp, value: s.value }));
+    }
+    this.updateChart();
+    // emit last visible value
+    if (this.data.length) {
+      this.valueChange.emit(this.data[this.data.length - 1].value);
+    }
+
+    // compute and emit value at center of the visible window
+    try {
+      const endTime = this.currentTime;
+      const centerT = endTime - (this.windowSec / 2);
+      const centerVal = this.getValueAtTime(centerT);
+      if (!isNaN(centerVal)) {
+        this.centerValueChange.emit(centerVal);
+      }
+    } catch (err) {
+      // ignore
+    }
+  }
+
+  /**
+   * Return interpolated value at given timestamp using the loaded samples.
+   * Falls back to nearest sample when interpolation isn't possible.
+   */
+  private getValueAtTime(t: number): number {
+    if (!this.samples || this.samples.length === 0) return NaN;
+    // if before first or after last, clamp
+    if (t <= this.samples[0].timestamp) return this.samples[0].value;
+    if (t >= this.samples[this.samples.length - 1].timestamp) return this.samples[this.samples.length - 1].value;
+    // find surrounding samples
+    for (let i = 0; i < this.samples.length - 1; i++) {
+      const a = this.samples[i];
+      const b = this.samples[i + 1];
+      if (t === a.timestamp) return a.value;
+      if (t > a.timestamp && t < b.timestamp) {
+        // linear interpolation
+        const frac = (t - a.timestamp) / (b.timestamp - a.timestamp);
+        return a.value + frac * (b.value - a.value);
+      }
+    }
+    // fallback
+    return this.samples[this.samples.length - 1].value;
   }
 
   private startAnimation(): void {

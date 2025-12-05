@@ -33,6 +33,22 @@ export class VitalsService {
     return this.vitals.map(v => ({ ...v }));
   }
 
+  /**
+   * Return the full set of defined vitals (including ones that may be active elsewhere).
+   * This is used for the trend/history view which should list all vitals.
+   */
+  getAllVitals(): Vital[] {
+    // return unique vitals by `vitalName` (first occurrence wins)
+    const seen = new Set<string>();
+    const out: Vital[] = [];
+    for (const v of this.initialVitals) {
+      if (seen.has(v.vitalName)) continue;
+      seen.add(v.vitalName);
+      out.push({ ...v });
+    }
+    return out;
+  }
+
   /** Reset to original default vitals */
   resetToDefaults(): void {
     // recreate fresh clones from the initial template

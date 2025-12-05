@@ -11,14 +11,29 @@ import { PresetsService } from 'src/app/presets.service';
 export class MainComponent implements OnInit {
 
   vitals: Vital[] = [];
+  // full list used for trend rows (should show all vitals regardless of active state)
+  trendVitals: Vital[] = [];
+  // expose Math to the template because templates can't access global Math directly
+  readonly Math = Math;
   // Five predefined slots on the right side. Each can hold a Vital or be null.
   slots: (Vital | null)[] = [null, null, null, null, null];
+  // Trend/history controls
+  trendWindowSeconds = 60 * 5; // visible window (seconds) default 5 minutes
+  trendOffsetSeconds = 0; // how far back from 'now' the right edge is
+  // center line percentage position in timeline (0..100)
+  timelineCenterPercent = 100;
+  // latest value per vital as provided by historical graphs
+  trendValues: { [vitalName: string]: number } = {};
+  // value at the center timestamp of the viewed history window
+  trendCenterValues: { [vitalName: string]: number | null } = {};
 
   constructor(private vitalService: VitalsService, private presets: PresetsService) {}
 
   ngOnInit(): void {
     this.vitals = this.vitalService.getVitals();
+    this.trendVitals = this.vitalService.getAllVitals();
     console.log(this.vitals);
+    this.updateTimelineCenter();
     // subscribe to preset changes
     this.presets.getCurrentIndex$().subscribe(() => {
       const preset = this.presets.getCurrentPreset();
@@ -121,6 +136,43 @@ export class MainComponent implements OnInit {
       v = Math.max(0, v);
       this.slots[slotIndex] = { ...this.slots[slotIndex]!, numVal: v };
     }
+  }
+
+  // Trend controls
+  setTrendRange(minutes: number) {
+    this.trendWindowSeconds = Math.max(1, Math.round(minutes * 60));
+    this.trendOffsetSeconds = Math.max(0, this.trendOffsetSeconds);
+    this.updateTimelineCenter();
+  }
+
+  shiftTrend(seconds: number) {
+    this.trendOffsetSeconds = Math.max(0, this.trendOffsetSeconds + seconds);
+    this.updateTimelineCenter();
+  }
+
+  jumpToNow() {
+    this.trendOffsetSeconds = 0;
+    this.updateTimelineCenter();
+  }
+
+  updateTimelineCenter() {
+    const pct = 1 - (this.trendOffsetSeconds / Math.max(1, this.trendWindowSeconds));
+    this.timelineCenterPercent = Math.max(0, Math.min(100, pct * 100));
+  }
+
+  formatOffsetLabel(sec: number) {
+    const s = Math.abs(Math.round(sec));
+    const h = Math.floor(s / 3600).toString().padStart(2, '0');
+    const m = Math.floor((s % 3600) / 60).toString().padStart(2, '0');
+    const ss = (s % 60).toString().padStart(2, '0');
+    return `-${h}:${m}:${ss}`;
+  }
+
+  // helper for templates to safely return the centered historical value or a fallback
+  getTrendCenterValue(vitalName: string, fallback: number): number {
+    const v = this.trendCenterValues[vitalName];
+    if (v === undefined || v === null || isNaN(v as any)) return fallback;
+    return v as number;
   }
 
 }

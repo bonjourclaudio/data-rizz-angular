@@ -16,6 +16,10 @@ export class VitalsComponent implements OnChanges, OnDestroy {
   @Input() active: boolean = false;
   @Input() size: string = "";
   @Input() color: string | undefined = "";
+  // when false, do not subscribe to LiveDataService updates (useful for historical/static display)
+  @Input() subscribeLive: boolean = true;
+  // when true, suppress rendering the embedded graph inside the component
+  @Input() noGraph: boolean = false;
   @Output() valueChange: EventEmitter<number> = new EventEmitter<number>();
 
   private liveSub: Subscription | null = null;
@@ -24,7 +28,7 @@ export class VitalsComponent implements OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['vitalName']) {
-      this.subscribeToLive();
+      if (this.subscribeLive) this.subscribeToLive();
     }
     // if active flag changes, we may want to emit latest value to parent
     if (changes['active'] && this.active && this.numVal !== undefined) {

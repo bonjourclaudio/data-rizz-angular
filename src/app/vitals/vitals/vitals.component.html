@@ -34,11 +34,45 @@
   </div>
   <div class="vital-active__container">
     <app-graph
+      *ngIf="!noGraph"
       [vitalName]="vitalName"
       [color]="color"
       [size]="size"
       (valueChange)="onGraphValue($event)"
     ></app-graph>
+  </div>
+</div>
+
+<!-- XS: very compact version used in trend list -->
+<div *ngIf="active && size === 'xs'" class="vital-active vital-xs">
+  <div class="vital-active__minmax">
+    <div>
+      <div class="vital-active__minmax__min" [ngStyle]="{ color: color }">
+        {{ minVal }}
+      </div>
+      <div class="vital-active__minmax__max" [ngStyle]="{ color: color }">
+        {{ maxVal }}
+      </div>
+    </div>
+  </div>
+  <div class="vital-inactive__container info">
+    <div class="vital-inactive__container__name" [ngStyle]="{ color: color }">
+      {{ vitalName }}<br />
+      <span class="unit">{{ unit }}</span>
+    </div>
+    <div class="vital-inactive__container__value" [ngStyle]="{ color: color }">
+      {{ numVal }}
+    </div>
+  </div>
+  <div class="vital-active__container">
+    <app-graph
+      *ngIf="!noGraph"
+      [vitalName]="vitalName"
+      [color]="color"
+      [size]="size"
+      (valueChange)="onGraphValue($event)"
+    >
+    </app-graph>
   </div>
 </div>
 
@@ -65,6 +99,7 @@
   </div>
   <div class="vital-active__container">
     <app-graph
+      *ngIf="!noGraph"
       [vitalName]="vitalName"
       [color]="color"
       [size]="size"

@@ -158,27 +158,40 @@
   <div class="trend-graph-container">
     <div class="trend-graph-container__menu">
       <div class="time-selectors">
-        <div class="time-selectors__item">
+        <div class="time-selectors__item" (click)="setTrendRange(5)">
           <span>5min</span>
         </div>
-        <div class="time-selectors__item">
+        <div class="time-selectors__item" (click)="setTrendRange(30)">
           <span>30min</span>
         </div>
-        <div class="time-selectors__item">
+        <div class="time-selectors__item" (click)="setTrendRange(60)">
           <span>1h</span>
         </div>
-        <div class="time-selectors__item">
-          <span>+</span>
+        <div class="time-selectors__item" (click)="jumpToNow()">
+          <span>Now</span>
         </div>
       </div>
       <div class="timeline">
-        <div class="timeline__left">
+        <div class="timeline__left" (click)="shiftTrend(60)">
           <img src="../../../assets/icons/arrow-left.svg" alt="" srcset="" />
         </div>
         <div class="timeline__bar">
-          <div class="timeline__bar__inner"></div>
+          <div class="timeline__bar__inner">
+            <div class="timeline-labels">
+              <span class="left-label">{{
+                formatOffsetLabel(trendWindowSeconds)
+              }}</span>
+              <span class="right-label">00:00:00</span>
+            </div>
+            <div class="timeline-center" [style.left.%]="timelineCenterPercent">
+              <div class="center-label">
+                {{ formatOffsetLabel(trendOffsetSeconds) }}
+              </div>
+              <div class="center-line"></div>
+            </div>
+          </div>
         </div>
-        <div class="timeline__right">
+        <div class="timeline__right" (click)="shiftTrend(-60)">
           <img src="../../../assets/icons/arrow-right.svg" alt="" srcset="" />
         </div>
       </div>
@@ -227,7 +240,62 @@
           </svg>
         </div>
       </div>
+      <div class="timeline-overlay" [style.left.%]="50"></div>
     </div>
-    <div class="trend-graph-container__chart-container"></div>
+    <div class="trend-graph-container__chart-container">
+      <div class="trend-graphs-list">
+        <ng-container *ngFor="let v of trendVitals">
+          <div class="trend-row">
+            <div class="trend-indicator">
+              <!-- historical snapshot (left) - reuse app-vitals layout but do not subscribe to live data and hide the graph -->
+
+              <div>
+                <span>Selected</span><br />
+                <app-vitals
+                  [vitalName]="v.vitalName"
+                  [unit]="v.unit"
+                  [minVal]="v.minVal"
+                  [maxVal]="v.maxVal"
+                  [numVal]="getTrendCenterValue(v.vitalName, v.numVal)"
+                  [size]="'xs'"
+                  [color]="v.color"
+                  [active]="true"
+                  [subscribeLive]="false"
+                  [noGraph]="true"
+                ></app-vitals>
+              </div>
+              <!-- live value (right) - reuse app-vitals layout but hide the graph; keep live subscription enabled -->
+
+              <div>
+                <span>Realtime</span><br />
+                <app-vitals
+                  [vitalName]="v.vitalName"
+                  [unit]="v.unit"
+                  [minVal]="v.minVal"
+                  [maxVal]="v.maxVal"
+                  [size]="'xs'"
+                  [color]="v.color"
+                  [active]="true"
+                  [noGraph]="true"
+                  (valueChange)="trendValues[v.vitalName] = $event"
+                ></app-vitals>
+              </div>
+            </div>
+
+            <div class="trend-graph-area">
+              <app-graph
+                [vitalName]="v.vitalName"
+                [color]="v.color"
+                [live]="false"
+                [timeWindowSeconds]="trendWindowSeconds"
+                [timeOffsetSeconds]="trendOffsetSeconds"
+                (valueChange)="trendValues[v.vitalName] = $event"
+                (centerValueChange)="trendCenterValues[v.vitalName] = $event"
+              ></app-graph>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
   </div>
 </div>

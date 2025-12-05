@@ -54,6 +54,7 @@
   }
 
   /* small graphs: two per row, each spans 2 columns */
+  position: relative; /* allow overlay positioned relative to this container */
   .active-graph-sm-1 {
     grid-column: 1 / span 2;
     grid-row: 2;
@@ -123,15 +124,18 @@
 
 .trend-graph-container {
   grid-column: 3 / span 8;
-  grid-row: 3 / span 4;
+  grid-row: 3 / span 2;
+
+  display: flex;
+  flex-direction: column;
 
   &__menu {
-    height: 10%;
+    flex: 0 0 56px;
     width: 100%;
-
-    display: inline-flex;
+    display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 8px;
 
     div {
       height: 100%;
@@ -188,7 +192,10 @@
         width: 90%;
 
         &__inner {
-          overflow-x: scroll;
+          /* timeline should not scroll; labels are positioned inside */
+          overflow: visible;
+          position: relative;
+          width: 100%;
         }
       }
       &__right {
@@ -238,8 +245,140 @@
   }
 
   &__chart-container {
-    height: 90%;
+    flex: 1 1 auto;
     width: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative; /* allow absolute timeline overlay inside */
+    padding: 8px;
+
+    .trend-row {
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 6px 8px;
+      box-sizing: border-box;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .trend-indicator {
+      display: flex;
+      width: 20%;
+      padding-right: 1rem;
+
+      span {
+        font-size: 0.6rem;
+        color: $text-color;
+        opacity: 40%;
+      }
+
+      div:nth-child(2) {
+        opacity: 50%;
+      }
+    }
+
+    .trend-graph-area {
+      width: 80%;
+    }
+
+    .trend-hist-value {
+      width: 56px;
+      font-weight: 600;
+      text-align: right;
+      margin-right: 8px;
+      color: $text-color;
+      font-size: 0.9rem;
+    }
+
+    .trend-live {
+      opacity: 0.6; /* visually deemphasize live value */
+    }
+
+    .timeline-overlay {
+      position: absolute;
+      /* start below the menu (56px) and extend to container bottom */
+      top: 56px;
+      bottom: 0;
+      width: 1px;
+      background: rgba(255, 255, 255, 0.12);
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    .timeline-labels {
+      position: relative; /* container for absolute labels */
+      width: 100%;
+      height: 20px;
+      position: absolute;
+      left: 0;
+      bottom: -20px; /* move labels under timeline bar to avoid overlap */
+      pointer-events: none;
+      color: $text-color;
+      font-size: 0.72rem;
+      z-index: 2;
+      white-space: nowrap;
+
+      .left-label {
+        position: absolute;
+        left: 0;
+        transform: translateX(0);
+        max-width: 45%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .right-label {
+        position: absolute;
+        right: 0;
+        transform: translateX(0);
+        max-width: 45%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-align: right;
+      }
+    }
+
+    .timeline-center {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      transform: translateX(-50%);
+      pointer-events: none;
+
+      .center-label {
+        position: absolute;
+        top: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.75rem;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 2px 6px;
+        border-radius: 4px;
+      }
+
+      .center-line {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: rgba(255, 255, 255, 0.12);
+      }
+    }
+
+    /* timeline center vertical line overlay (redundant definition kept for safety) */
+    .timeline-overlay {
+      position: absolute;
+      top: 56px;
+      bottom: 0;
+      width: 1px;
+      background: rgba(255, 255, 255, 0.12);
+      pointer-events: none;
+      z-index: 999;
+    }
   }
 }

@@ -51,6 +51,37 @@
   }
 }
 
+/* XS compact variant for trend rows */
+.vital-active.vital-xs {
+  font-size: 0.85rem;
+  width: 100px;
+
+  &__minmax {
+    width: 22px;
+    padding-top: 0.6rem;
+    margin-right: 0.5rem;
+  }
+
+  .info {
+    width: 120px;
+  }
+
+  .vital-inactive__container__name {
+    font-size: 0.85rem;
+  }
+
+  .vital-inactive__container__value {
+    font-size: 1.25rem;
+  }
+
+  .vital-active__container {
+    /* keep tiny graph hidden in trend rows; if shown it must be very small */
+    svg {
+      height: 28px !important;
+    }
+  }
+}
+
 .unit {
   font-size: 0.6rem;
 }
