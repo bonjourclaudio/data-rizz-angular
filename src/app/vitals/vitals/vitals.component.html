@@ -1,0 +1,74 @@
+<!-- INACTIVE -->
+<div *ngIf="!active" class="vital-inactive">
+  <div class="vital-inactive__container">
+    <div class="vital-inactive__container__name" [ngStyle]="{ color: color }">
+      {{ vitalName }}
+    </div>
+    <div class="vital-inactive__container__value" [ngStyle]="{ color: color }">
+      {{ numVal }}
+    </div>
+  </div>
+</div>
+
+<!-- ACTIVE -->
+<!-- SM -->
+<div *ngIf="active && size === 'sm'" class="vital-active">
+  <div class="vital-active__minmax">
+    <div>
+      <div class="vital-active__minmax__min" [ngStyle]="{ color: color }">
+        {{ minVal }}
+      </div>
+      <div class="vital-active__minmax__max" [ngStyle]="{ color: color }">
+        {{ maxVal }}
+      </div>
+    </div>
+  </div>
+  <div class="vital-inactive__container info">
+    <div class="vital-inactive__container__name" [ngStyle]="{ color: color }">
+      {{ vitalName }}<br />
+      <span class="unit">{{ unit }}</span>
+    </div>
+    <div class="vital-inactive__container__value" [ngStyle]="{ color: color }">
+      {{ numVal }}
+    </div>
+  </div>
+  <div class="vital-active__container">
+    <app-graph
+      [vitalName]="vitalName"
+      [color]="color"
+      [size]="size"
+      (valueChange)="onGraphValue($event)"
+    ></app-graph>
+  </div>
+</div>
+
+<!-- LG -->
+<div *ngIf="active && size === 'lg'" class="vital-active">
+  <div class="vital-active__minmax">
+    <div>
+      <div class="vital-active__minmax__min" [ngStyle]="{ color: color }">
+        {{ minVal }}
+      </div>
+      <div class="vital-active__minmax__max" [ngStyle]="{ color: color }">
+        {{ maxVal }}
+      </div>
+    </div>
+  </div>
+  <div class="vital-inactive__container info">
+    <div class="vital-inactive__container__name" [ngStyle]="{ color: color }">
+      {{ vitalName }}<br />
+      <span class="unit">{{ unit }}</span>
+    </div>
+    <div class="vital-inactive__container__value" [ngStyle]="{ color: color }">
+      {{ numVal }}
+    </div>
+  </div>
+  <div class="vital-active__container">
+    <app-graph
+      [vitalName]="vitalName"
+      [color]="color"
+      [size]="size"
+      (valueChange)="onGraphValue($event)"
+    ></app-graph>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+import { Component, Input, Output, EventEmitter, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { LiveDataService } from './live-data.service';
+
+@Component({
+  selector: 'app-vitals',
+  templateUrl: './vitals.component.html',
+  styleUrls: ['./vitals.component.scss']
+})
+export class VitalsComponent implements OnChanges, OnDestroy {
+  @Input() vitalName: string | undefined = "";
+  @Input() unit: string = "";
+  @Input() numVal: number | undefined = 0;
+  @Input() minVal: number = 0;
+  @Input() maxVal: number = 0;
+  @Input() active: boolean = false;
+  @Input() size: string = "";
+  @Input() color: string | undefined = "";
+  @Output() valueChange: EventEmitter<number> = new EventEmitter<number>();
+
+  private liveSub: Subscription | null = null;
+
+  constructor(private live: LiveDataService) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['vitalName']) {
+      this.subscribeToLive();
+    }
+    // if active flag changes, we may want to emit latest value to parent
+    if (changes['active'] && this.active && this.numVal !== undefined) {
+      // notify parent that the graph (or service) has a current value
+      this.valueChange.emit(this.numVal as number);
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.liveSub) {
+      this.liveSub.unsubscribe();
+      this.liveSub = null;
+    }
+  }
+
+  private subscribeToLive(): void {
+    if (this.liveSub) {
+      this.liveSub.unsubscribe();
+      this.liveSub = null;
+    }
+    if (!this.vitalName) return;
+    try {
+      this.liveSub = this.live.getValue$(this.vitalName).subscribe(val => {
+        if (isNaN(val)) return;
+        let v = Number(val);
+        if (isNaN(v)) v = 0;
+        v = Math.round(v);
+        v = Math.max(0, v);
+        this.numVal = v;
+        // only emit to parent when this component is active (parent expects valueChange for active slots)
+        if (this.active) {
+          this.valueChange.emit(v);
+        }
+      });
+    } catch (err) {
+      // ignore missing file or service errors
+    }
+  }
+
+  onGraphValue(val: number) {
+    let v = Number(val);
+    if (isNaN(v)) v = 0;
+    v = Math.round(v);
+    v = Math.max(0, v);
+    this.numVal = v;
+    this.valueChange.emit(v);
+  }
+}

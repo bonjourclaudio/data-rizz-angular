@@ -1,0 +1,71 @@
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="navbar__inner">
+    <div class="navbar__inner__preset">
+      <div class="navbar__inner__preset__container">
+        <div class="preset-slider">
+          <div
+            class="arrow-left"
+            (click)="prevPreset()"
+            role="button"
+            tabindex="0"
+          >
+            <span>&lt;</span>
+          </div>
+          <div
+            class="preset-name"
+            (click)="requestSavePreset()"
+            role="button"
+            tabindex="0"
+          >
+            <span>{{ displayName$ | async }}</span>
+          </div>
+          <div
+            class="arrow-right"
+            (click)="nextPreset()"
+            role="button"
+            tabindex="0"
+          >
+            <span>&gt;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="navbar__inner__main">
+      <div class="navbar__inner__main__left">
+        <div class="name">
+          <span>John Doe</span>
+        </div>
+        <div class="birthdate">
+          <span>01.01.1905</span>
+        </div>
+        <div class="gender">
+          <span>M</span>
+        </div>
+      </div>
+      <div class="navbar__inner__main__center">
+        <div class="emergency-btn">
+          <span>Emergency</span>
+        </div>
+      </div>
+      <div class="navbar__inner__main__right">
+        <div class="date">
+          <span> {{ currentTime | date : "dd.MM.yyyy" }}</span>
+        </div>
+        <div class="time">
+          <span> {{ currentTime | date : "HH:mm:ss" }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="navbar__inner__log">
+      <div class="navbar__inner__log__container">
+        <div class="log-icon">
+          <span>i</span>
+        </div>
+        <div class="log-badge">
+          <span>0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

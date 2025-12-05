@@ -1,0 +1,233 @@
+<div class="grid">
+  <!-- ######### LIVE GRAPH SECTION ######### -->
+
+  <div class="active-graph-selector">
+    <div class="active-graph-selector__title">Active Graphs</div>
+    <div class="active-graph-selector__inner">
+      <div
+        class="active-graph-selector__inner__item"
+        *ngFor="let vital of vitals | callback : filterActiveVitals"
+        draggable="true"
+        (dragstart)="onDragStart($event, vital.vitalName)"
+      >
+        <app-vitals
+          class="inactive"
+          [unit]="vital.unit"
+          [vitalName]="vital.vitalName"
+          [maxVal]="vital.maxVal"
+          [minVal]="vital.minVal"
+          [active]="vital.active"
+          [size]="'small'"
+          [color]="vital.color"
+        ></app-vitals>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTIVE GRAPHS DISPLAYED HERE -->
+  <div class="active-graph-container">
+    <div
+      class="active-graph-lg"
+      (dragover)="allowDrop($event)"
+      (drop)="onDrop($event, 0)"
+    >
+      <ng-container *ngIf="slots[0]; else placeholder0">
+        <app-vitals
+          [unit]="slots[0].unit"
+          [active]="true"
+          [maxVal]="slots[0].maxVal"
+          [minVal]="slots[0].minVal"
+          [vitalName]="slots[0]?.vitalName"
+          [numVal]="slots[0]?.numVal"
+          (valueChange)="onSlotValueChange($event, 0)"
+          [size]="'lg'"
+          [color]="slots[0]?.color"
+        ></app-vitals>
+      </ng-container>
+      <ng-template #placeholder0>LG</ng-template>
+    </div>
+    <div
+      class="active-graph-sm-1"
+      (dragover)="allowDrop($event)"
+      (drop)="onDrop($event, 1)"
+    >
+      <ng-container *ngIf="slots[1]; else placeholder1">
+        <app-vitals
+          [unit]="slots[1].unit"
+          [active]="true"
+          [maxVal]="slots[1].maxVal"
+          [minVal]="slots[1].minVal"
+          [vitalName]="slots[1]?.vitalName"
+          [numVal]="slots[1]?.numVal"
+          (valueChange)="onSlotValueChange($event, 1)"
+          [size]="'sm'"
+          [color]="slots[1]?.color"
+        ></app-vitals>
+      </ng-container>
+      <ng-template #placeholder1>SM 1</ng-template>
+    </div>
+    <div
+      class="active-graph-sm-2"
+      (dragover)="allowDrop($event)"
+      (drop)="onDrop($event, 2)"
+    >
+      <ng-container *ngIf="slots[2]; else placeholder2">
+        <app-vitals
+          [unit]="slots[2].unit"
+          [active]="true"
+          [maxVal]="slots[2].maxVal"
+          [minVal]="slots[2].minVal"
+          [vitalName]="slots[2]?.vitalName"
+          [numVal]="slots[2]?.numVal"
+          (valueChange)="onSlotValueChange($event, 2)"
+          [size]="'sm'"
+          [color]="slots[2]?.color"
+        ></app-vitals>
+      </ng-container>
+      <ng-template #placeholder2>SM 2</ng-template>
+    </div>
+    <div
+      class="active-graph-sm-3"
+      (dragover)="allowDrop($event)"
+      (drop)="onDrop($event, 3)"
+    >
+      <ng-container *ngIf="slots[3]; else placeholder3">
+        <app-vitals
+          [unit]="slots[3].unit"
+          [active]="true"
+          [maxVal]="slots[3].maxVal"
+          [minVal]="slots[3].minVal"
+          [vitalName]="slots[3]?.vitalName"
+          [numVal]="slots[3]?.numVal"
+          (valueChange)="onSlotValueChange($event, 3)"
+          [size]="'sm'"
+          [color]="slots[3]?.color"
+        ></app-vitals>
+      </ng-container>
+      <ng-template #placeholder3>SM 3</ng-template>
+    </div>
+    <div
+      class="active-graph-sm-4"
+      (dragover)="allowDrop($event)"
+      (drop)="onDrop($event, 4)"
+    >
+      <ng-container *ngIf="slots[4]; else placeholder4">
+        <app-vitals
+          [unit]="slots[4].unit"
+          [active]="true"
+          [maxVal]="slots[4].maxVal"
+          [minVal]="slots[4].minVal"
+          [vitalName]="slots[4]?.vitalName"
+          [numVal]="slots[4]?.numVal"
+          (valueChange)="onSlotValueChange($event, 4)"
+          [size]="'sm'"
+          [color]="slots[4]?.color"
+        ></app-vitals>
+      </ng-container>
+      <ng-template #placeholder4>SM 4</ng-template>
+    </div>
+  </div>
+
+  <!-- ######### TREND GRAPH SECTION ######### -->
+  <div class="trend-graph-selector">
+    <div class="trend-graph-selector__title">Selection</div>
+    <div class="trend-graph-selector__inner">
+      <div class="trend-graph-selector__inner__element">
+        <div class="selector-name">Essential</div>
+        <div class="selector-icon"></div>
+      </div>
+      <div class="trend-graph-selector__inner__element">
+        <div class="selector-name">Heart</div>
+        <div class="selector-icon"></div>
+      </div>
+      <div class="trend-graph-selector__inner__element">
+        <div class="selector-name">Brain</div>
+        <div class="selector-icon"></div>
+      </div>
+      <div class="trend-graph-selector__inner__element">
+        <div class="selector-name">Picto</div>
+        <div class="selector-icon"></div>
+      </div>
+      <div class="trend-graph-selector__inner__element">
+        <div class="selector-name">All</div>
+        <div class="selector-icon"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trend-graph-container">
+    <div class="trend-graph-container__menu">
+      <div class="time-selectors">
+        <div class="time-selectors__item">
+          <span>5min</span>
+        </div>
+        <div class="time-selectors__item">
+          <span>30min</span>
+        </div>
+        <div class="time-selectors__item">
+          <span>1h</span>
+        </div>
+        <div class="time-selectors__item">
+          <span>+</span>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="timeline__left">
+          <img src="../../../assets/icons/arrow-left.svg" alt="" srcset="" />
+        </div>
+        <div class="timeline__bar">
+          <div class="timeline__bar__inner"></div>
+        </div>
+        <div class="timeline__right">
+          <img src="../../../assets/icons/arrow-right.svg" alt="" srcset="" />
+        </div>
+      </div>
+      <div class="trend-btn">
+        <div class="">
+          <!-- add class active -->
+          <svg
+            width="20"
+            height="16"
+            viewBox="0 0 20 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              class="stroke-col"
+              d="M0.75 0.75H18.75"
+              stroke="#282A33"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-dasharray="6 6"
+            />
+            <path
+              class="stroke-col"
+              d="M0.75 5.46094H18.75"
+              stroke="#282A33"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-dasharray="6 6"
+            />
+            <path
+              class="stroke-col"
+              d="M0.75 10.0527H18.75"
+              stroke="#282A33"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-dasharray="6 6"
+            />
+            <path
+              class="stroke-col"
+              d="M0.75 14.4004H18.75"
+              stroke="#282A33"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-dasharray="6 6"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="trend-graph-container__chart-container"></div>
+  </div>
+</div>

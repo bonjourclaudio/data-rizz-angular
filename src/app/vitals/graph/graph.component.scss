@@ -1,0 +1,21 @@
+:host {
+  display: block;
+}
+.graph-wrapper {
+  font-family: system-ui, sans-serif;
+}
+.graph-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.graph-title {
+  font-weight: 600;
+  font-size: 12px;
+}
+.chart-container {
+  width: 100%;
+}
+.line {
+  fill: none;
+}
