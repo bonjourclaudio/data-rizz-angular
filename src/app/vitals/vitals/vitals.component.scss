@@ -39,6 +39,10 @@
     margin-right: 1rem;
 
     text-align: right;
+    .selectable {
+      cursor: pointer;
+      user-select: none;
+    }
   }
 
   .info {
@@ -101,4 +105,70 @@
 /* apply to the root elements so the whole box flashes */
 .vital-warning {
   animation: vital-blink 1s linear 5;
+}
+
+/* value selector overlay */
+.value-selector-overlay {
+  position: absolute;
+  inset: 0; /* cover the vital component area */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 50;
+}
+
+.value-selector {
+  width: 90px;
+  height: 220px;
+  background: #111217;
+  border: 1px solid #333;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+}
+
+.value-selector__spacer {
+  flex: 1 0 1rem;
+}
+
+.value-selector__list {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 0;
+}
+
+.value-item {
+  height: 28px;
+  line-height: 28px;
+  color: #bbb;
+  font-size: 1rem;
+  width: 100%;
+  text-align: center;
+}
+
+.value-item--center {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: white;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.01)
+  );
+  border-radius: 4px;
+}
+
+.value-item--empty {
+  height: 28px;
+}
+
+.value-item--center-empty {
+  height: 28px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.02);
 }
