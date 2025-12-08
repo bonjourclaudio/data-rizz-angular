@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Vital } from 'src/app/vitals/vitals/vital.model';
 import { VitalsService } from 'src/app/vitals/vitals/vitals.service';
 import { PresetsService } from 'src/app/presets.service';
@@ -6,7 +6,8 @@ import { PresetsService } from 'src/app/presets.service';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+  styleUrls: ['./main.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MainComponent implements OnInit {
 
@@ -27,7 +28,7 @@ export class MainComponent implements OnInit {
   // value at the center timestamp of the viewed history window
   trendCenterValues: { [vitalName: string]: number | null } = {};
 
-  constructor(private vitalService: VitalsService, private presets: PresetsService) {}
+  constructor(private vitalService: VitalsService, private presets: PresetsService, private ngZone: NgZone, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.vitals = this.vitalService.getVitals();
@@ -43,6 +44,19 @@ export class MainComponent implements OnInit {
     // subscribe to save requests from navbar and save current slots as new preset
     this.presets.getSaveRequests$().subscribe(() => {
       this.presets.savePresetFromSlots(this.slots);
+    });
+
+    // Listen for arrow key presses outside Angular zone to avoid change detection issues
+    this.ngZone.runOutsideAngular(() => {
+      document.addEventListener('keydown', (event: KeyboardEvent) => {
+        if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          this.ngZone.run(() => this.shiftTrend(60));
+        } else if (event.key === 'ArrowRight') {
+          event.preventDefault();
+          this.ngZone.run(() => this.shiftTrend(-60));
+        }
+      });
     });
   }
 
@@ -135,6 +149,7 @@ export class MainComponent implements OnInit {
       v = Math.round(v);
       v = Math.max(0, v);
       this.slots[slotIndex] = { ...this.slots[slotIndex]!, numVal: v };
+      this.cdr.markForCheck();
     }
   }
 
@@ -159,11 +174,13 @@ export class MainComponent implements OnInit {
   shiftTrend(seconds: number) {
     this.trendOffsetSeconds = Math.max(0, this.trendOffsetSeconds + seconds);
     this.updateTimelineCenter();
+    this.cdr.markForCheck();
   }
 
   jumpToNow() {
     this.trendOffsetSeconds = 0;
     this.updateTimelineCenter();
+    this.cdr.markForCheck();
   }
 
   updateTimelineCenter() {
@@ -185,6 +202,16 @@ export class MainComponent implements OnInit {
     const v = this.trendCenterValues[vitalName];
     if (v === undefined || v === null || isNaN(v as any)) return fallback;
     return v as number;
+  }
+
+  onTrendValueChange(vitalName: string, value: number): void {
+    this.trendValues[vitalName] = value;
+    this.cdr.markForCheck();
+  }
+
+  onTrendCenterValueChange(vitalName: string, value: number): void {
+    this.trendCenterValues[vitalName] = value;
+    this.cdr.markForCheck();
   }
 
 }

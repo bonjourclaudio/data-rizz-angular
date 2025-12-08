@@ -37,11 +37,11 @@
           [active]="true"
           [maxVal]="slots[0].maxVal"
           [minVal]="slots[0].minVal"
-          [vitalName]="slots[0]?.vitalName"
-          [numVal]="slots[0]?.numVal"
+          [vitalName]="slots[0].vitalName"
+          [numVal]="slots[0].numVal"
           (valueChange)="onSlotValueChange($event, 0)"
           [size]="'lg'"
-          [color]="slots[0]?.color"
+          [color]="slots[0].color"
         ></app-vitals>
       </ng-container>
       <ng-template #placeholder0>LG</ng-template>
@@ -57,11 +57,11 @@
           [active]="true"
           [maxVal]="slots[1].maxVal"
           [minVal]="slots[1].minVal"
-          [vitalName]="slots[1]?.vitalName"
-          [numVal]="slots[1]?.numVal"
+          [vitalName]="slots[1].vitalName"
+          [numVal]="slots[1].numVal"
           (valueChange)="onSlotValueChange($event, 1)"
           [size]="'sm'"
-          [color]="slots[1]?.color"
+          [color]="slots[1].color"
         ></app-vitals>
       </ng-container>
       <ng-template #placeholder1>SM 1</ng-template>
@@ -77,11 +77,11 @@
           [active]="true"
           [maxVal]="slots[2].maxVal"
           [minVal]="slots[2].minVal"
-          [vitalName]="slots[2]?.vitalName"
-          [numVal]="slots[2]?.numVal"
+          [vitalName]="slots[2].vitalName"
+          [numVal]="slots[2].numVal"
           (valueChange)="onSlotValueChange($event, 2)"
           [size]="'sm'"
-          [color]="slots[2]?.color"
+          [color]="slots[2].color"
         ></app-vitals>
       </ng-container>
       <ng-template #placeholder2>SM 2</ng-template>
@@ -97,11 +97,11 @@
           [active]="true"
           [maxVal]="slots[3].maxVal"
           [minVal]="slots[3].minVal"
-          [vitalName]="slots[3]?.vitalName"
-          [numVal]="slots[3]?.numVal"
+          [vitalName]="slots[3].vitalName"
+          [numVal]="slots[3].numVal"
           (valueChange)="onSlotValueChange($event, 3)"
           [size]="'sm'"
-          [color]="slots[3]?.color"
+          [color]="slots[3].color"
         ></app-vitals>
       </ng-container>
       <ng-template #placeholder3>SM 3</ng-template>
@@ -117,11 +117,11 @@
           [active]="true"
           [maxVal]="slots[4].maxVal"
           [minVal]="slots[4].minVal"
-          [vitalName]="slots[4]?.vitalName"
-          [numVal]="slots[4]?.numVal"
+          [vitalName]="slots[4].vitalName"
+          [numVal]="slots[4].numVal"
           (valueChange)="onSlotValueChange($event, 4)"
           [size]="'sm'"
-          [color]="slots[4]?.color"
+          [color]="slots[4].color"
         ></app-vitals>
       </ng-container>
       <ng-template #placeholder4>SM 4</ng-template>
@@ -277,7 +277,7 @@
                   [color]="v.color"
                   [active]="true"
                   [noGraph]="true"
-                  (valueChange)="trendValues[v.vitalName] = $event"
+                  (valueChange)="onTrendValueChange(v.vitalName, $event)"
                 ></app-vitals>
               </div>
             </div>
@@ -289,8 +289,10 @@
                 [live]="false"
                 [timeWindowSeconds]="trendWindowSeconds"
                 [timeOffsetSeconds]="trendOffsetSeconds"
-                (valueChange)="trendValues[v.vitalName] = $event"
-                (centerValueChange)="trendCenterValues[v.vitalName] = $event"
+                (valueChange)="onTrendValueChange(v.vitalName, $event)"
+                (centerValueChange)="
+                  onTrendCenterValueChange(v.vitalName, $event)
+                "
               ></app-graph>
             </div>
           </div>

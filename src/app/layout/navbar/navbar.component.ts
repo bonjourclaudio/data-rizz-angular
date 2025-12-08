@@ -5,10 +5,9 @@ import { LogService } from 'src/app/log.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
-
   currentTime: number = Date.now();
 
   constructor(public presets: PresetsService, private log: LogService) {
@@ -21,7 +20,11 @@ export class NavbarComponent {
     return this.log.getLogCount$();
   }
 
-  
+  warnlogToggle = false;
+
+  toggleWarnlog() {
+    this.warnlogToggle = !this.warnlogToggle;
+  }
 
   nextPreset() {
     this.presets.next();
@@ -40,5 +43,4 @@ export class NavbarComponent {
   get displayName$() {
     return this.presets.getDisplayName$();
   }
-
 }

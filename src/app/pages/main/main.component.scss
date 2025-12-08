@@ -31,6 +31,7 @@
       width: 30%;
       cursor: pointer;
       margin: 1rem;
+      user-select: none !important;
     }
   }
 }
@@ -268,6 +269,7 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.03);
       flex-shrink: 0;
       height: auto;
+      min-width: 0; /* allow flex children to shrink below content size */
     }
 
     .trend-indicator {
@@ -289,8 +291,8 @@
     }
 
     .trend-graph-area {
-      width: 80%;
-      flex-shrink: 1;
+      flex: 1 1 auto;
+      min-width: 0; /* critical for flex child to shrink properly */
       overflow: hidden;
     }
 
