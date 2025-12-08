@@ -23,6 +23,11 @@ $rows: 4;
   grid-gap: 1rem;
 }
 
+html,
+body {
+  overflow: hidden !important;
+}
+
 body {
   margin: 0;
   padding: 0;
