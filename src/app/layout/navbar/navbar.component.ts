@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { PresetsService } from 'src/app/presets.service';
+import { LogService } from 'src/app/log.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,10 +11,14 @@ export class NavbarComponent {
 
   currentTime: number = Date.now();
 
-  constructor(public presets: PresetsService) {
+  constructor(public presets: PresetsService, private log: LogService) {
     setInterval(() => {
       this.currentTime = Date.now();
     }, 1000);
+  }
+
+  get logCount$() {
+    return this.log.getLogCount$();
   }
 
   

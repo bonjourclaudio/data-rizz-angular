@@ -1,270 +1,82 @@
-[
-  {
-    "timestamp": 12168,
-    "value": 92
-  },
-  {
-    "timestamp": 12169,
-    "value": 93
-  },
-  {
-    "timestamp": 12170,
-    "value": 94
-  },
-  {
-    "timestamp": 12171,
-    "value": 93
-  },
-  {
-    "timestamp": 12172,
-    "value": 94
-  },
-  {
-    "timestamp": 12173,
-    "value": 95
-  },
-  {
-    "timestamp": 12174,
-    "value": 96
-  },
-  {
-    "timestamp": 12175,
-    "value": 96
-  },
-  {
-    "timestamp": 12176,
-    "value": 95
-  },
-  {
-    "timestamp": 12177,
-    "value": 95
-  },
-  {
-    "timestamp": 12178,
-    "value": 94
-  },
-  {
-    "timestamp": 12179,
-    "value": 93
-  },
-  {
-    "timestamp": 12180,
-    "value": 93
-  },
-  {
-    "timestamp": 12181,
-    "value": 93
-  },
-  {
-    "timestamp": 12182,
-    "value": 94
-  },
-  {
-    "timestamp": 12183,
-    "value": 94
-  },
-  {
-    "timestamp": 12184,
-    "value": 94
-  },
-  {
-    "timestamp": 12185,
-    "value": 95
-  },
-  {
-    "timestamp": 12186,
-    "value": 96
-  },
-  {
-    "timestamp": 12187,
-    "value": 96
-  },
-  {
-    "timestamp": 12188,
-    "value": 96
-  },
-  {
-    "timestamp": 12189,
-    "value": 95
-  },
-  {
-    "timestamp": 12190,
-    "value": 94
-  },
-  {
-    "timestamp": 12191,
-    "value": 93
-  },
-  {
-    "timestamp": 12192,
-    "value": 94
-  },
-  {
-    "timestamp": 12193,
-    "value": 93
-  },
-  {
-    "timestamp": 12194,
-    "value": 93
-  },
-  {
-    "timestamp": 12195,
-    "value": 92
-  },
-  {
-    "timestamp": 12196,
-    "value": 91
-  },
-  {
-    "timestamp": 12197,
-    "value": 92
-  },
-  {
-    "timestamp": 12198,
-    "value": 91
-  },
-  {
-    "timestamp": 12199,
-    "value": 90
-  },
-  {
-    "timestamp": 12200,
-    "value": 90
-  },
-  {
-    "timestamp": 12201,
-    "value": 91
-  },
-  {
-    "timestamp": 12202,
-    "value": 92
-  },
-  {
-    "timestamp": 12203,
-    "value": 92
-  },
-  {
-    "timestamp": 12204,
-    "value": 91
-  },
-  {
-    "timestamp": 12205,
-    "value": 91
-  },
-  {
-    "timestamp": 12206,
-    "value": 92
-  },
-  {
-    "timestamp": 12207,
-    "value": 91
-  },
-  {
-    "timestamp": 12208,
-    "value": 90
-  },
-  {
-    "timestamp": 12209,
-    "value": 91
-  },
-  {
-    "timestamp": 12210,
-    "value": 91
-  },
-  {
-    "timestamp": 12211,
-    "value": 91
-  },
-  {
-    "timestamp": 12212,
-    "value": 92
-  },
-  {
-    "timestamp": 12213,
-    "value": 92
-  },
-  {
-    "timestamp": 12214,
-    "value": 93
-  },
-  {
-    "timestamp": 12215,
-    "value": 94
-  },
-  {
-    "timestamp": 12216,
-    "value": 94
-  },
-  {
-    "timestamp": 12217,
-    "value": 93
-  },
-  {
-    "timestamp": 12218,
-    "value": 92
-  },
-  {
-    "timestamp": 12219,
-    "value": 93
-  },
-  {
-    "timestamp": 12220,
-    "value": 94
-  },
-  {
-    "timestamp": 12221,
-    "value": 94
-  },
-  {
-    "timestamp": 12222,
-    "value": 95
-  },
-  {
-    "timestamp": 12223,
-    "value": 94
-  },
-  {
-    "timestamp": 12224,
-    "value": 93
-  },
-  {
-    "timestamp": 12225,
-    "value": 93
-  },
-  {
-    "timestamp": 12226,
-    "value": 93
-  },
-  {
-    "timestamp": 12227,
-    "value": 94
-  },
-  {
-    "timestamp": 12228,
-    "value": 94
-  },
-  {
-    "timestamp": 12229,
-    "value": 95
-  },
-  {
-    "timestamp": 12230,
-    "value": 94
-  },
-  {
-    "timestamp": 12231,
-    "value": 95
-  },
-  {
-    "timestamp": 12232,
-    "value": 95
-  },
-  {
-    "timestamp": 12233,
-    "value": 96
-  },
-  {
-    "timestamp": 12234,
-    "value": 95
+{
+  "fetch": {
+    "signal": [
+      {
+        "name": "TCore",
+        "units": "",
+        "t0": 13236,
+        "tf": 13302,
+        "tps": 1,
+        "samp": [
+          79,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          82,
+          85,
+          84,
+          85,
+          84,
+          85,
+          86,
+          85,
+          84,
+          83,
+          84,
+          83,
+          83,
+          84,
+          85,
+          86,
+          87,
+          87,
+          86,
+          86,
+          85,
+          86,
+          88,
+          89,
+          90,
+          89,
+          87,
+          88,
+          87,
+          89,
+          88,
+          87,
+          88,
+          89,
+          90,
+          92,
+          89,
+          89,
+          88,
+          87,
+          89,
+          90,
+          90,
+          91,
+          90,
+          91,
+          92,
+          93,
+          92,
+          91,
+          90,
+          89,
+          89,
+          90,
+          91,
+          90,
+          89,
+          88,
+          87
+        ]
+      }
+    ]
   }
-]
+}

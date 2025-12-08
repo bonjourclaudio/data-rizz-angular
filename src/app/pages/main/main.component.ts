@@ -140,7 +140,18 @@ export class MainComponent implements OnInit {
 
   // Trend controls
   setTrendRange(minutes: number) {
-    this.trendWindowSeconds = Math.max(1, Math.round(minutes * 60));
+    const oldWindow = this.trendWindowSeconds;
+    const newWindow = Math.max(1, Math.round(minutes * 60));
+    
+    // Scale the offset proportionally to maintain relative position
+    // If we're at 50% through a 5min window and switch to 30min,
+    // we should be at 50% through the 30min window
+    if (oldWindow > 0) {
+      const relativePosition = this.trendOffsetSeconds / oldWindow;
+      this.trendOffsetSeconds = Math.round(relativePosition * newWindow);
+    }
+    
+    this.trendWindowSeconds = newWindow;
     this.trendOffsetSeconds = Math.max(0, this.trendOffsetSeconds);
     this.updateTimelineCenter();
   }
@@ -165,7 +176,8 @@ export class MainComponent implements OnInit {
     const h = Math.floor(s / 3600).toString().padStart(2, '0');
     const m = Math.floor((s % 3600) / 60).toString().padStart(2, '0');
     const ss = (s % 60).toString().padStart(2, '0');
-    return `-${h}:${m}:${ss}`;
+    const sign = sec < 0 ? '-' : '';
+    return `${sign}${h}:${m}:${ss}`;
   }
 
   // helper for templates to safely return the centered historical value or a fallback

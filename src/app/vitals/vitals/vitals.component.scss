@@ -85,3 +85,20 @@
 .unit {
   font-size: 0.6rem;
 }
+
+@keyframes vital-blink {
+  0% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: rgba(255, 0, 0, 0.25);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+/* apply to the root elements so the whole box flashes */
+.vital-warning {
+  animation: vital-blink 1s linear 5;
+}

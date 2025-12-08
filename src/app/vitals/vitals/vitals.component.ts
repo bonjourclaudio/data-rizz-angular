@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { LiveDataService } from './live-data.service';
+import { LogService } from 'src/app/log.service';
 
 @Component({
   selector: 'app-vitals',
@@ -23,8 +24,24 @@ export class VitalsComponent implements OnChanges, OnDestroy {
   @Output() valueChange: EventEmitter<number> = new EventEmitter<number>();
 
   private liveSub: Subscription | null = null;
+  private warnSub: Subscription | null = null;
+  warningActive: boolean = false;
 
-  constructor(private live: LiveDataService) {}
+  constructor(private live: LiveDataService, private log: LogService) {
+    // subscribe to recent warnings and toggle a local warning flag when this vital is reported
+    this.warnSub = this.log.getRecentWarning$().subscribe(entry => {
+      try {
+        if (!entry || !this.vitalName) return;
+        if (entry.vitalName === this.vitalName) {
+          this.warningActive = true;
+          // turn off after 5s
+          setTimeout(() => {
+            this.warningActive = false;
+          }, 5000);
+        }
+      } catch (err) {}
+    });
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['vitalName']) {
@@ -41,6 +58,10 @@ export class VitalsComponent implements OnChanges, OnDestroy {
     if (this.liveSub) {
       this.liveSub.unsubscribe();
       this.liveSub = null;
+    }
+    if (this.warnSub) {
+      this.warnSub.unsubscribe();
+      this.warnSub = null;
     }
   }
 

@@ -176,20 +176,16 @@
           <img src="../../../assets/icons/arrow-left.svg" alt="" srcset="" />
         </div>
         <div class="timeline__bar">
-          <div class="timeline__bar__inner">
-            <div class="timeline-labels">
-              <span class="left-label">{{
-                formatOffsetLabel(trendWindowSeconds)
-              }}</span>
-              <span class="right-label">00:00:00</span>
-            </div>
-            <div class="timeline-center" [style.left.%]="timelineCenterPercent">
-              <div class="center-label">
-                {{ formatOffsetLabel(trendOffsetSeconds) }}
-              </div>
-              <div class="center-line"></div>
-            </div>
+          <span class="timeline-tick">
+            {{ formatOffsetLabel(-trendWindowSeconds) }}
+          </span>
+          <div
+            class="timeline-position-indicator"
+            [style.left.%]="(1 - trendOffsetSeconds / trendWindowSeconds) * 100"
+          >
+            <div class="timeline-position-marker"></div>
           </div>
+          <span class="timeline-tick">00:00:00</span>
         </div>
         <div class="timeline__right" (click)="shiftTrend(-60)">
           <img src="../../../assets/icons/arrow-right.svg" alt="" srcset="" />
@@ -240,10 +236,14 @@
           </svg>
         </div>
       </div>
-      <div class="timeline-overlay" [style.left.%]="50"></div>
     </div>
     <div class="trend-graph-container__chart-container">
       <div class="trend-graphs-list">
+        <div class="timeline-overlay">
+          <div class="timeline-overlay-label">
+            {{ formatOffsetLabel(-trendOffsetSeconds) }}
+          </div>
+        </div>
         <ng-container *ngFor="let v of trendVitals">
           <div class="trend-row">
             <div class="trend-indicator">

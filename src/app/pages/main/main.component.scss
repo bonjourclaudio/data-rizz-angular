@@ -117,6 +117,7 @@
         font-size: 0.8rem;
       }
       .selector-icon {
+        display: flex;
       }
     }
   }
@@ -173,30 +174,32 @@
       width: 75%;
       padding-left: 1rem;
       padding-right: 1rem;
+      height: 100%;
 
-      display: inline-flex;
+      display: flex;
       justify-content: space-between;
       align-items: center;
 
-      div {
+      &__left,
+      &__right {
         height: 100%;
-        width: 5%;
         display: flex;
         justify-content: center;
         align-items: center;
       }
 
       &__left {
+        width: 5%;
       }
       &__bar {
         width: 90%;
-
-        &__inner {
-          /* timeline should not scroll; labels are positioned inside */
-          overflow: visible;
-          position: relative;
-          width: 100%;
-        }
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        box-sizing: border-box;
+        padding: 0 4px;
       }
       &__right {
         width: 5%;
@@ -251,22 +254,28 @@
     overflow-x: hidden;
     position: relative; /* allow absolute timeline overlay inside */
     padding: 8px;
+    display: flex;
+    flex-direction: column;
 
     .trend-row {
       width: 100%;
-      display: inline-flex;
+      display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
       padding: 6px 8px;
       box-sizing: border-box;
       border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      flex-shrink: 0;
+      height: auto;
     }
 
     .trend-indicator {
       display: flex;
       width: 20%;
+      flex-shrink: 0;
       padding-right: 1rem;
+      align-items: center;
 
       span {
         font-size: 0.6rem;
@@ -281,6 +290,8 @@
 
     .trend-graph-area {
       width: 80%;
+      flex-shrink: 1;
+      overflow: hidden;
     }
 
     .trend-hist-value {
@@ -296,89 +307,58 @@
       opacity: 0.6; /* visually deemphasize live value */
     }
 
+    .trend-graphs-list {
+      position: relative;
+    }
+
     .timeline-overlay {
       position: absolute;
-      /* start below the menu (56px) and extend to container bottom */
-      top: 56px;
-      bottom: 0;
-      width: 1px;
-      background: rgba(255, 255, 255, 0.12);
-      pointer-events: none;
-      z-index: 999;
-    }
-
-    .timeline-labels {
-      position: relative; /* container for absolute labels */
-      width: 100%;
-      height: 20px;
-      position: absolute;
-      left: 0;
-      bottom: -20px; /* move labels under timeline bar to avoid overlap */
-      pointer-events: none;
-      color: $text-color;
-      font-size: 0.72rem;
-      z-index: 2;
-      white-space: nowrap;
-
-      .left-label {
-        position: absolute;
-        left: 0;
-        transform: translateX(0);
-        max-width: 45%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      .right-label {
-        position: absolute;
-        right: 0;
-        transform: translateX(0);
-        max-width: 45%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        text-align: right;
-      }
-    }
-
-    .timeline-center {
-      position: absolute;
+      left: 50%;
       top: 0;
       bottom: 0;
-      transform: translateX(-50%);
-      pointer-events: none;
-
-      .center-label {
-        position: absolute;
-        top: -20px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 0.75rem;
-        background: rgba(0, 0, 0, 0.6);
-        padding: 2px 6px;
-        border-radius: 4px;
-      }
-
-      .center-line {
-        position: absolute;
-        left: 50%;
-        top: 0;
-        bottom: 0;
-        width: 1px;
-        background: rgba(255, 255, 255, 0.12);
-      }
-    }
-
-    /* timeline center vertical line overlay (redundant definition kept for safety) */
-    .timeline-overlay {
-      position: absolute;
-      top: 56px;
-      bottom: 0;
-      width: 1px;
-      background: rgba(255, 255, 255, 0.12);
+      height: 100%;
+      width: 2px;
+      background: rgba(255, 255, 255, 0.5);
       pointer-events: none;
       z-index: 999;
+      transform: translateX(-50%);
+    }
+
+    .timeline-overlay-label {
+      position: sticky;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: $text-color;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      white-space: nowrap;
+      z-index: 1000;
+    }
+
+    .timeline-tick {
+      font-size: 0.65rem;
+      color: $text-color;
+      white-space: nowrap;
+      text-align: center;
+      opacity: 0.8;
+    }
+
+    .timeline-position-indicator {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+    }
+
+    .timeline-position-marker {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid rgba(255, 255, 255, 0.5);
     }
   }
 }
