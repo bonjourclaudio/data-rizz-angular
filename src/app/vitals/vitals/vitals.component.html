@@ -23,10 +23,21 @@
 >
   <div class="vital-active__minmax">
     <div>
-      <div class="vital-active__minmax__min" [ngStyle]="{ color: color }">
+      <!-- make min/max clickable to open selector -->
+      <div
+        class="vital-active__minmax__min selectable"
+        [ngStyle]="{ color: color }"
+        (click)="openSelectorAt('min', $event)"
+        title="Click to adjust min"
+      >
         {{ minVal }}
       </div>
-      <div class="vital-active__minmax__max" [ngStyle]="{ color: color }">
+      <div
+        class="vital-active__minmax__max selectable"
+        [ngStyle]="{ color: color }"
+        (click)="openSelectorAt('max', $event)"
+        title="Click to adjust max"
+      >
         {{ maxVal }}
       </div>
     </div>
@@ -51,6 +62,68 @@
   </div>
 </div>
 
+<!-- Selector overlay (single shared for min/max) -->
+<div
+  *ngIf="selectorVisible"
+  #selectorOverlay
+  class="value-selector-overlay"
+  tabindex="0"
+  (wheel)="onSelectorWheel($event)"
+  (click)="commitSelector()"
+  [ngStyle]="selectorStyle"
+>
+  <div
+    class="value-selector"
+    [ngStyle]="selectorStyle"
+    (click)="$event.stopPropagation()"
+    (pointerdown)="onPointerDown($event)"
+    (pointermove)="onPointerMove($event)"
+    (pointerup)="onPointerUp($event)"
+  >
+    <div class="value-selector__spacer"></div>
+    <div class="value-selector__list">
+      <!-- render a range around selectorTempValue for visual context -->
+      <!-- show 3 above, center, and 3 below but hide numbers outside allowed range -->
+      <ng-container *ngFor="let offset of [-3, -2, -1]">
+        <div class="value-item">
+          <ng-container
+            *ngIf="isAllowed(selectorTempValue + offset); else emptySlot"
+          >
+            {{ selectorTempValue + offset }}
+          </ng-container>
+        </div>
+      </ng-container>
+
+      <div
+        class="value-item value-item--center"
+        (click)="isAllowed(selectorTempValue) && commitSelector()"
+      >
+        <ng-container *ngIf="isAllowed(selectorTempValue); else emptyCenter">
+          {{ selectorTempValue }}
+        </ng-container>
+      </div>
+
+      <ng-container *ngFor="let offset of [1, 2, 3]">
+        <div class="value-item">
+          <ng-container
+            *ngIf="isAllowed(selectorTempValue + offset); else emptySlot"
+          >
+            {{ selectorTempValue + offset }}
+          </ng-container>
+        </div>
+      </ng-container>
+
+      <ng-template #emptySlot>
+        <div class="value-item--empty"></div>
+      </ng-template>
+      <ng-template #emptyCenter>
+        <div class="value-item--empty value-item--center-empty"></div>
+      </ng-template>
+    </div>
+    <div class="value-selector__spacer"></div>
+  </div>
+</div>
+
 <!-- XS: very compact version used in trend list -->
 <div
   *ngIf="active && size === 'xs'"
@@ -59,10 +132,18 @@
 >
   <div class="vital-active__minmax">
     <div>
-      <div class="vital-active__minmax__min" [ngStyle]="{ color: color }">
+      <div
+        class="vital-active__minmax__min selectable"
+        [ngStyle]="{ color: color }"
+        (click)="openSelectorAt('min', $event)"
+      >
         {{ minVal }}
       </div>
-      <div class="vital-active__minmax__max" [ngStyle]="{ color: color }">
+      <div
+        class="vital-active__minmax__max selectable"
+        [ngStyle]="{ color: color }"
+        (click)="openSelectorAt('max', $event)"
+      >
         {{ maxVal }}
       </div>
     </div>
@@ -96,10 +177,18 @@
 >
   <div class="vital-active__minmax">
     <div>
-      <div class="vital-active__minmax__min" [ngStyle]="{ color: color }">
+      <div
+        class="vital-active__minmax__min selectable"
+        [ngStyle]="{ color: color }"
+        (click)="openSelectorAt('min', $event)"
+      >
         {{ minVal }}
       </div>
-      <div class="vital-active__minmax__max" [ngStyle]="{ color: color }">
+      <div
+        class="vital-active__minmax__max selectable"
+        [ngStyle]="{ color: color }"
+        (click)="openSelectorAt('max', $event)"
+      >
         {{ maxVal }}
       </div>
     </div>
