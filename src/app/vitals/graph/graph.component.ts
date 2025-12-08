@@ -33,6 +33,7 @@ export class GraphComponent implements OnDestroy, OnChanges, AfterViewInit {
   private windowSec = 4; // seconds shown by default for high-rate signals
   private samplingRate = 1; // Hz default; will be detected from data
   private samplesPerWindow = 4; // samplingRate * windowSec
+  private currentWindowSamples: number[] = [];
   private currentSampleIndex = 0;
   private timerId: any = null;
 
@@ -62,11 +63,12 @@ export class GraphComponent implements OnDestroy, OnChanges, AfterViewInit {
       }
       
       // re-render static window when controls change
-      if (this.allSamples && this.allSamples.length) {
+      if (this.allSamples && this.allSamples.length > 0) {
         if (this.live) {
           this.startAnimation();
         } else {
           this.renderStaticWindow();
+          this.updateChart(this.currentWindowSamples || []);
         }
       }
     }
@@ -122,7 +124,9 @@ export class GraphComponent implements OnDestroy, OnChanges, AfterViewInit {
 
         if (!this.allSamples || this.allSamples.length === 0) return;
         // compute window size in samples
-        this.windowSec = Number(this.timeWindowSeconds) || this.windowSec;
+        // For historical view: use a fixed zoom level for detailed exploration
+        // This allows navigation through longer periods with buttons/arrows
+        this.windowSec = (this.live) ? (Number(this.timeWindowSeconds) || this.windowSec) : 20;
         this.samplesPerWindow = Math.max(1, Math.floor(this.windowSec * this.samplingRate));
         // start at beginning so we play the provided samples in order (do not manipulate)
         this.currentSampleIndex = 0;
@@ -166,7 +170,8 @@ export class GraphComponent implements OnDestroy, OnChanges, AfterViewInit {
       }
     }
     
-    // compute scales and render
+    // Store for re-rendering and compute scales/render
+    this.currentWindowSamples = windowSamples;
     this.updateChart(windowSamples);
     
     // emit center value
