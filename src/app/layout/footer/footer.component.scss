@@ -8,13 +8,6 @@
   font-size: 80%;
   white-space: nowrap;
 
-  .footer-btn {
-    background-color: $footer-button-color;
-
-    padding: 0.25rem 0.5rem 0.25rem 0.5rem;
-    border-radius: 50px;
-  }
-
   &__inner {
     width: 100%;
     display: flex;
@@ -33,6 +26,7 @@
         width: 25%;
         justify-content: flex-start;
         gap: 0.5rem;
+        height: 100%;
       }
       &__center {
         display: flex;
@@ -40,6 +34,7 @@
         justify-content: center;
         align-items: center;
         gap: 0.5rem;
+        height: 100%;
       }
       &__right {
         height: 100%;
@@ -51,4 +46,20 @@
       }
     }
   }
+}
+
+.footer-btn {
+  background-color: $footer-button-color;
+
+  //padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+  height: 100%;
+  border-radius: 50px;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
 }
