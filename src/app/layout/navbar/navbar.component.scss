@@ -157,10 +157,32 @@
     font-size: large;
     z-index: 99;
 
+
+    &__content {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 0.5rem;
+        justify-content: space-between;
+    }
+
     &__header {
         display:flex;
+        align-items: center;
         justify-content: space-between;
         margin-bottom: 1rem;
+    
+        #stop-btn {
+            cursor: pointer;
+            border-radius:15px;
+            border: 1px solid white;
+            padding: 0.25rem 0.5rem 0.25rem;
+        }
+
+        #warnlog-title {
+            // padding: 0.25rem 0.5rem 0.25rem;
+            padding-top: 0.25rem
+        }
 
         svg,
         svg path {
@@ -168,6 +190,5 @@
             height: 1.25rem;
             fill:white;
         }
-
     }
 }
