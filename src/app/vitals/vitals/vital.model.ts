@@ -7,4 +7,5 @@ export interface Vital {
     maxVal: number;
     active: boolean;
     color: string;
+    category?: 'essential' | 'heart' | 'brain' | 'other';
 }

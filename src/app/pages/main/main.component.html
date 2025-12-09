@@ -133,23 +133,43 @@
   <div class="trend-graph-selector">
     <div class="trend-graph-selector__title">Selection</div>
     <div class="trend-graph-selector__inner">
-      <div class="trend-graph-selector__inner__element">
+      <div
+        class="trend-graph-selector__inner__element"
+        [class.active]="trendFilter === 'essential'"
+        (click)="setTrendFilter('essential')"
+      >
         <div class="selector-name">Essential</div>
         <div class="selector-icon"></div>
       </div>
-      <div class="trend-graph-selector__inner__element">
+      <div
+        class="trend-graph-selector__inner__element"
+        [class.active]="trendFilter === 'heart'"
+        (click)="setTrendFilter('heart')"
+      >
         <div class="selector-name">Heart</div>
         <div class="selector-icon"></div>
       </div>
-      <div class="trend-graph-selector__inner__element">
+      <div
+        class="trend-graph-selector__inner__element"
+        [class.active]="trendFilter === 'brain'"
+        (click)="setTrendFilter('brain')"
+      >
         <div class="selector-name">Brain</div>
         <div class="selector-icon"></div>
       </div>
-      <div class="trend-graph-selector__inner__element">
+      <div
+        class="trend-graph-selector__inner__element"
+        [class.active]="trendFilter === 'other'"
+        (click)="setTrendFilter('other')"
+      >
         <div class="selector-name">Picto</div>
         <div class="selector-icon"></div>
       </div>
-      <div class="trend-graph-selector__inner__element">
+      <div
+        class="trend-graph-selector__inner__element"
+        [class.active]="trendFilter === 'all'"
+        (click)="setTrendFilter('all')"
+      >
         <div class="selector-name">All</div>
         <div class="selector-icon"></div>
       </div>
@@ -245,7 +265,9 @@
             {{ formatOffsetLabel(-trendOffsetSeconds) }}
           </div>
         </div>
-        <ng-container *ngFor="let v of trendVitals">
+        <ng-container
+          *ngFor="let v of trendVitals | callback : filterTrendVitals"
+        >
           <div class="trend-row">
             <div class="trend-indicator">
               <!-- historical snapshot (left) - reuse app-vitals layout but do not subscribe to live data and hide the graph -->
