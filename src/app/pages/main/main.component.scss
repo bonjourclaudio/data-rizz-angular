@@ -309,9 +309,10 @@
     }
 
     .trend-graph-area {
-      flex: 1 1 auto;
+      flex: 1 1 100%;
       min-width: 0; /* critical for flex child to shrink properly */
       overflow: hidden;
+      width: 100%;
     }
 
     .trend-hist-value {

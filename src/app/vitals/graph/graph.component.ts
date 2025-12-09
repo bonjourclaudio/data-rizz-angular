@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnDestroy, OnChanges, SimpleChanges, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnDestroy, OnChanges, SimpleChanges, AfterViewInit, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as d3 from 'd3';
 
@@ -28,6 +28,7 @@ export class GraphComponent implements OnDestroy, OnChanges, AfterViewInit {
   private line: any;
   private width = 300;
   private height = 100;
+  private resizeObserver: ResizeObserver | null = null;
 
   // playback/control
   private windowSec = 4; // seconds shown by default for high-rate signals
@@ -37,12 +38,30 @@ export class GraphComponent implements OnDestroy, OnChanges, AfterViewInit {
   private currentSampleIndex = 0;
   private timerId: any = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private ngZone: NgZone) {}
 
   ngAfterViewInit(): void {
-    this.createChart();
-    if (this.vitalName) {
-      this.loadSamplesAndStart();
+    // Use a small delay to ensure layout is finalized
+    setTimeout(() => {
+      this.createChart();
+      if (this.vitalName) {
+        this.loadSamplesAndStart();
+      }
+    }, 50);
+
+    // Set up ResizeObserver to handle container resize
+    if (this.chartContainer?.nativeElement) {
+      this.resizeObserver = new ResizeObserver(() => {
+        this.ngZone.runOutsideAngular(() => {
+          setTimeout(() => {
+            this.ngZone.run(() => {
+              this.createChart(true);
+              this.renderStaticWindow();
+            });
+          }, 50);
+        });
+      });
+      this.resizeObserver.observe(this.chartContainer.nativeElement);
     }
   }
 
@@ -76,6 +95,9 @@ export class GraphComponent implements OnDestroy, OnChanges, AfterViewInit {
 
   ngOnDestroy(): void {
     this.stopAnimation();
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+    }
   }
 
   private resetData(): void {
@@ -182,29 +204,6 @@ export class GraphComponent implements OnDestroy, OnChanges, AfterViewInit {
     }
   }
 
-  /**
-   * Return interpolated value at given timestamp using the loaded samples.
-   * Falls back to nearest sample when interpolation isn't possible.
-   */
-  private getValueAtTime(t: number): number {
-    if (!this.samples || this.samples.length === 0) return NaN;
-    // if before first or after last, clamp
-    if (t <= this.samples[0].timestamp) return this.samples[0].value;
-    if (t >= this.samples[this.samples.length - 1].timestamp) return this.samples[this.samples.length - 1].value;
-    // find surrounding samples
-    for (let i = 0; i < this.samples.length - 1; i++) {
-      const a = this.samples[i];
-      const b = this.samples[i + 1];
-      if (t === a.timestamp) return a.value;
-      if (t > a.timestamp && t < b.timestamp) {
-        // linear interpolation
-        const frac = (t - a.timestamp) / (b.timestamp - a.timestamp);
-        return a.value + frac * (b.value - a.value);
-      }
-    }
-    // fallback
-    return this.samples[this.samples.length - 1].value;
-  }
 
   private startAnimation(): void {
     this.stopAnimation();
@@ -224,10 +223,6 @@ export class GraphComponent implements OnDestroy, OnChanges, AfterViewInit {
     const start = Math.max(0, this.currentSampleIndex - this.samplesPerWindow + 1);
     const windowSamples = this.getWindowSamples(this.currentSampleIndex);
     this.updateChart(windowSamples);
-  }
-
-  private advance(): void {
-    // legacy - not used in new flow
   }
 
   private tick(): void {
@@ -254,7 +249,7 @@ export class GraphComponent implements OnDestroy, OnChanges, AfterViewInit {
     if (!container) return;
 
     // set sizes based on `size`
-    this.width = container.clientWidth - 20;
+    this.width = container.clientWidth;
     this.height = 100;
 
     d3.select(container).selectAll('svg').remove();
@@ -271,8 +266,10 @@ export class GraphComponent implements OnDestroy, OnChanges, AfterViewInit {
 
     this.svg = d3.select(container)
       .append('svg')
-      .attr('width', this.width)
+      .attr('width', '100%')
       .attr('height', this.height)
+      .attr('viewBox', `0 0 ${this.width} ${this.height}`)
+      .attr('preserveAspectRatio', 'none')
       .append('g')
       .attr('transform', `translate(${margin.left},${margin.top})`);
 

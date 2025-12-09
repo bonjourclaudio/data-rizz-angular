@@ -59,6 +59,8 @@ export class MainComponent implements OnInit {
         }
       });
     });
+
+    
   }
 
   filterActiveVitals(vital: Vital): boolean {
