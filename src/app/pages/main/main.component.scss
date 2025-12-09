@@ -86,7 +86,7 @@
     height: 10%;
   }
   &__inner {
-    width: 90%;
+    width: 50%;
     height: 100%;
 
     display: flex;
@@ -98,8 +98,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-
-      padding: 0.5rem;
+      padding: 0.2rem;
       margin-bottom: 0.5rem;
 
       border: 1px solid $accent-color;
@@ -116,8 +115,11 @@
 
       .selector-name {
         font-size: 0.8rem;
+        margin-left: 1rem;
       }
       .selector-icon {
+        margin-right: 1rem;
+        width: 2rem;
         display: flex;
       }
     }
@@ -152,8 +154,8 @@
       height: 100%;
 
       &__item {
-        width: 35px;
-        height: 35px;
+        width: 2.5rem;
+        height: 2.5rem;
         background-color: $accent-color;
         display: flex;
         justify-content: center;
