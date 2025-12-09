@@ -37,6 +37,7 @@ export class VitalsService {
    */
   getAllVitals(): Vital[] {
     // return unique vitals by `vitalName` (first occurrence wins)
+    // initialVitals is kept in sync with the pinning order
     const seen = new Set<string>();
     const out: Vital[] = [];
     for (const v of this.initialVitals) {
@@ -45,6 +46,23 @@ export class VitalsService {
       out.push({ ...v });
     }
     return out;
+  }
+
+  changeVitalOrder(vitalName: string, newIndex: number): void {
+    const currentIndex = this.vitals.findIndex(v => v.vitalName === vitalName);
+    if (currentIndex === -1 || newIndex < 0 || newIndex >= this.vitals.length) {
+      return;
+    }
+    const [vital] = this.vitals.splice(currentIndex, 1);
+    this.vitals.splice(newIndex, 0, vital);
+    this.vitals = [...this.vitals];
+    
+    // Also update initialVitals order to keep them in sync
+    const initialIndex = this.initialVitals.findIndex(v => v.vitalName === vitalName);
+    if (initialIndex !== -1) {
+      const [initialVital] = this.initialVitals.splice(initialIndex, 1);
+      this.initialVitals.splice(newIndex, 0, initialVital);
+    }
   }
 
   /** Reset to original default vitals */

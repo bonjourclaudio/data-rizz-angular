@@ -266,9 +266,17 @@
           </div>
         </div>
         <ng-container
-          *ngFor="let v of trendVitals | callback : filterTrendVitals"
+          *ngFor="
+            let v of trendVitals | callback : filterTrendVitals;
+            trackBy: trackByVitalName
+          "
         >
-          <div class="trend-row">
+          <div
+            class="trend-row"
+            (swipeleft)="pinVital(v)"
+            (swiperight)="unpinVital(v)"
+            [id]="v.vitalName"
+          >
             <div class="trend-indicator">
               <!-- historical snapshot (left) - reuse app-vitals layout but do not subscribe to live data and hide the graph -->
 
@@ -317,6 +325,20 @@
                   onTrendCenterValueChange(v.vitalName, $event)
                 "
               ></app-graph>
+            </div>
+            <div class="trend-pin">
+              <svg
+                width="12"
+                height="20"
+                viewBox="0 0 12 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M10 9L12 11V13H7V19L6 20L5 19V13H0V11L2 9V2H1V0H11V2H10V9ZM2.85 11H9.15L8 9.85V2H4V9.85L2.85 11Z"
+                  fill="white"
+                />
+              </svg>
             </div>
           </div>
         </ng-container>
