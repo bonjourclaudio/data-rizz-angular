@@ -1,19 +1,38 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PresetsService } from 'src/app/presets.service';
 import { LogService } from 'src/app/log.service';
+import { Router, NavigationEnd } from '@angular/router';
+
+
+import {filter} from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   currentTime: number = Date.now();
 
-  constructor(public presets: PresetsService, private log: LogService) {
+  emergency: boolean = false;
+
+  constructor(public presets: PresetsService, private log: LogService, public router: Router) {
     setInterval(() => {
       this.currentTime = Date.now();
     }, 1000);
+  }
+
+   ngOnInit() {
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+    )
+    .subscribe((event: NavigationEnd) => {
+      if (event.url === '/emergency') {
+        this.emergency = true;
+      } else {
+        this.emergency = false;
+      }
+    });
   }
 
   get logCount$() {

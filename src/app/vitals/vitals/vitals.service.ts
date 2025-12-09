@@ -11,15 +11,14 @@ export class VitalsService {
     { vitalName: 'ABP', unit: "Sys.", numVal: 120, minVal: 90, maxVal: 140, active: false, color: "#D10000" },
     { vitalName: 'RR', unit: "rpm", numVal: 16, minVal: 12, maxVal: 20, active: false, color: "#FFF165" },
     { vitalName: 'SpO2', unit: "%",numVal: 98, minVal: 95, maxVal: 100, active: false, color: "#00B2CF" },
+    { vitalName: 'Temp',unit: "°C", numVal: 37, minVal: 36, maxVal: 39, active: false, color: "#91F741" },
     { vitalName: 'TCore',unit: "°C", numVal: 98.6, minVal: 97, maxVal: 99, active: false, color: "#91F741" },
     { vitalName: 'CVP', unit: "",numVal: 9, minVal: 2, maxVal: 8, active: false, color: "#88CBE3" },
-    { vitalName: 'CVP', unit: "",numVal: 9, minVal: 2, maxVal: 8, active: false, color: "#88CBE3" },
-    { vitalName: 'CVP', unit: "",numVal: 9, minVal: 2, maxVal: 8, active: false, color: "#88CBE3" },
-    { vitalName: 'CVP', unit: "",numVal: 9, minVal: 2, maxVal: 8, active: false, color: "#88CBE3" },
-    { vitalName: 'CVP', unit: "",numVal: 9, minVal: 2, maxVal: 8, active: false, color: "#88CBE3" },
-    { vitalName: 'CVP', unit: "",numVal: 9, minVal: 2, maxVal: 8, active: false, color: "#88CBE3" },
-    { vitalName: 'CVP', unit: "",numVal: 9, minVal: 2, maxVal: 8, active: false, color: "#88CBE3" },
-    { vitalName: 'CVP', unit: "",numVal: 9, minVal: 2, maxVal: 8, active: false, color: "#88CBE3" }
+    { vitalName: 'ICP', unit: "",numVal: 9, minVal: 2, maxVal: 8, active: false, color: "#FE41C2" },
+    { vitalName: 'PAP', unit: "",numVal: 9, minVal: 2, maxVal: 8, active: false, color: "#FEFE2D" },
+    { vitalName: 'TSkin', unit: "",numVal: 9, minVal: 2, maxVal: 8, active: false, color: "#E77BFE" },
+    { vitalName: 'etCO2', unit: "",numVal: 9, minVal: 2, maxVal: 8, active: false, color: "#D9D9D9" },
+
   ];
 
   // runtime shallow-cloned list so mutations do not affect the `initialVitals` template

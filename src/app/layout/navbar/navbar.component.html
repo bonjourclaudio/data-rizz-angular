@@ -1,7 +1,7 @@
 <!-- NAVBAR -->
 <div class="navbar">
   <div class="navbar__inner">
-    <div class="navbar__inner__preset">
+    <div class="navbar__inner__preset" *ngIf="!emergency">
       <div class="navbar__inner__preset__container">
         <div class="preset-slider">
           <div
@@ -31,7 +31,7 @@
         </div>
       </div>
     </div>
-    <div class="navbar__inner__main">
+    <div class="navbar__inner__main" [ngClass]="{ emergency: emergency }">
       <div class="navbar__inner__main__left">
         <div class="name">
           <span>John Doe</span>
@@ -45,7 +45,12 @@
       </div>
       <div class="navbar__inner__main__center">
         <div class="emergency-btn">
-          <span>Emergency</span>
+          <span *ngIf="!emergency">
+            <a [routerLink]="'/emergency'">Emergency</a></span
+          >
+          <span *ngIf="emergency">
+            <a [routerLink]="'/main'">Resolve Emergency</a>
+          </span>
         </div>
       </div>
       <div class="navbar__inner__main__right">
@@ -57,35 +62,53 @@
         </div>
       </div>
     </div>
-    <div class="navbar__inner__log">
+    <div class="navbar__inner__log" [ngClass]="{ emergency: emergency }">
       <div class="navbar__inner__log__container">
-        <div class="log-icon" (click)="toggleWarnlog()" role="button" tabindex="0">
+        <div
+          class="log-icon"
+          (click)="toggleWarnlog()"
+          role="button"
+          tabindex="0"
+        >
           <span>i</span>
         </div>
         <div class="log-badge">
           <span>{{ logCount$ | async }}</span>
         </div>
 
-       <div class="log-panel" id="log-panel" [style.display]="warnlogToggle ? 'block' : 'none'">
-        <div class="log-panel__header">
-        <span id="warnlog-title">Warnungslog</span>
-        <span id="stop-btn">Stoppen</span>
-    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-        viewBox="0 0 20 20" style="enable-background:new 0 0 20 20;" xml:space="preserve">
-    <path d="M7,2H2v5l1.8-1.8L6.5,8L8,6.5L5.2,3.8L7,2z M13,2l1.8,1.8L12,6.5L13.5,8l2.7-2.7L18,7V2H13z M13.5,12L12,13.5l2.7,2.7L13,18
-        h5v-5l-1.8,1.8L13.5,12z M6.5,12l-2.7,2.7L2,13v5h5l-1.8-1.8L8,13.5L6.5,12z"/>
-</svg>
-        </div>
-        <div class="log-panel__content">
+        <div
+          class="log-panel"
+          id="log-panel"
+          [style.display]="warnlogToggle ? 'block' : 'none'"
+        >
+          <div class="log-panel__header">
+            <span id="warnlog-title">Warnungslog</span>
+            <span id="stop-btn">Stoppen</span>
+            <svg
+              version="1.1"
+              id="Layer_1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              x="0px"
+              y="0px"
+              viewBox="0 0 20 20"
+              style="enable-background: new 0 0 20 20"
+              xml:space="preserve"
+            >
+              <path
+                d="M7,2H2v5l1.8-1.8L6.5,8L8,6.5L5.2,3.8L7,2z M13,2l1.8,1.8L12,6.5L13.5,8l2.7-2.7L18,7V2H13z M13.5,12L12,13.5l2.7,2.7L13,18
+        h5v-5l-1.8,1.8L13.5,12z M6.5,12l-2.7,2.7L2,13v5h5l-1.8-1.8L8,13.5L6.5,12z"
+              />
+            </svg>
+          </div>
+          <div class="log-panel__content">
             <span>10:0:01</span>
             <span>Keine Warnungen</span>
-          <!-- <div class="log-entry" *ngFor="let log of warnlog$ | async"> -->
+            <!-- <div class="log-entry" *ngFor="let log of warnlog$ | async"> -->
             <!-- <span class="log-timestamp">{{ log.timestamp | date : "HH:mm:ss" }}</span> -->
             <!-- <span class="log-message">{{ log.message }}</span> -->
           </div>
-
-       </div> 
-
+        </div>
       </div>
     </div>
   </div>

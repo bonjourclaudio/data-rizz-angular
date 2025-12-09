@@ -7,10 +7,12 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { MainComponent } from './pages/main/main.component';
-import { EmergencyComponent } from './pages/emergency/emergency.component';
 import { VitalsComponent } from './vitals/vitals/vitals.component';
 import { CallbackPipe } from './callback.pipe';
 import { GraphComponent } from './vitals/graph/graph.component';
+import { EmergencyComponent } from './pages/emergency/emergency.component';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -18,15 +20,17 @@ import { GraphComponent } from './vitals/graph/graph.component';
     NavbarComponent,
     FooterComponent,
     MainComponent,
-    EmergencyComponent,
     VitalsComponent,
     CallbackPipe,
-    GraphComponent
+    GraphComponent,
+    EmergencyComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

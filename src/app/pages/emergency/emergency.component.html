@@ -1,1 +1,18 @@
-<p>emergency works!</p>
+<div class="emergency-container" *ngIf="vitalsToShow.length > 0">
+  <div class="emergency-container__left">
+    <div class="vital-container">
+      <div class="vital" *ngFor="let vital of vitalsToShow">
+        <app-vitals
+          [unit]="vital.unit"
+          [vitalName]="vital.vitalName"
+          [maxVal]="vital.maxVal"
+          [minVal]="vital.minVal"
+          [active]="true"
+          [size]="'lg'"
+          [color]="vital.color"
+        ></app-vitals>
+      </div>
+    </div>
+  </div>
+  <div class="emergency-container__right"></div>
+</div>

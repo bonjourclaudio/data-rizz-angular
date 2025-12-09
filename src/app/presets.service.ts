@@ -26,7 +26,7 @@ export class PresetsService {
     this.presets = [
       {
         name: 'Default',
-        slots: ['ABP', 'SpO2', 'HR', 'RR', 'TCore']
+        slots: ['ABP', 'SpO2', 'HR', 'RR', 'Temp']
       }
     ];
     // initialize display name
