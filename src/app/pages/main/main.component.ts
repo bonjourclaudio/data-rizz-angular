@@ -35,7 +35,6 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     this.vitals = this.vitalService.getVitals();
     this.trendVitals = this.vitalService.getAllVitals();
-    console.log(this.vitals);
     this.updateTimelineCenter();
     // subscribe to preset changes
     this.presets.getCurrentIndex$().subscribe(() => {
@@ -67,17 +66,17 @@ export class MainComponent implements OnInit {
   }
 
   filterTrendVitals = (vital: Vital): boolean => {
-    const result = this.trendFilter === 'all' || vital.category === this.trendFilter;
-    console.log(`filterTrendVitals(${vital.vitalName}): filter=${this.trendFilter}, category=${vital.category}, result=${result}`);
-    return result;
+    if (this.trendFilter === 'all') return true;
+    return vital.category === this.trendFilter;
+  }
+
+  trackByVitalName(index: number, vital: Vital): string {
+    return vital.vitalName;
   }
 
   setTrendFilter(filter: 'all' | 'essential' | 'heart' | 'brain' | 'other'): void {
-    console.log('setTrendFilter called with:', filter);
-    this.ngZone.run(() => {
-      this.trendFilter = filter;
-      this.cdr.markForCheck();
-    });
+    this.trendFilter = filter;
+    this.cdr.markForCheck();
   }
 
   onDragStart(event: DragEvent, vitalName: string): void {
@@ -228,6 +227,28 @@ export class MainComponent implements OnInit {
   onTrendCenterValueChange(vitalName: string, value: number): void {
     this.trendCenterValues[vitalName] = value;
     this.cdr.markForCheck();
+  }
+
+  pinVital(vital: Vital): void {
+    this.vitalService.changeVitalOrder(vital.vitalName, 0);
+    // Create a new array reference to trigger change detection
+    this.trendVitals = [...this.vitalService.getAllVitals()];
+    this.cdr.detectChanges();
+
+    setTimeout(() => {
+      const targetVital = document.getElementById(vital.vitalName);
+      targetVital?.classList.add("pinned");
+
+      targetVital?.getElementsByClassName("trend-pin")[0]?.classList.add("visible");
+
+      console.log(targetVital)
+    }, 0);
+  }
+
+  unpinVital(vital: Vital): void {
+    const targetVital = document.getElementById(vital.vitalName);
+    targetVital?.classList.remove("pinned");
+     targetVital?.getElementsByClassName("trend-pin")[0]?.classList.remove("visible");
   }
 
 }
