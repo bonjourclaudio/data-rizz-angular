@@ -27,6 +27,8 @@ export class MainComponent implements OnInit {
   trendValues: { [vitalName: string]: number } = {};
   // value at the center timestamp of the viewed history window
   trendCenterValues: { [vitalName: string]: number | null } = {};
+  // filter for historical graphs: 'all', 'essential', 'heart', 'brain', 'other'
+  trendFilter: 'all' | 'essential' | 'heart' | 'brain' | 'other' = 'all';
 
   constructor(private vitalService: VitalsService, private presets: PresetsService, private ngZone: NgZone, private cdr: ChangeDetectorRef) {}
 
@@ -62,6 +64,20 @@ export class MainComponent implements OnInit {
 
   filterActiveVitals(vital: Vital): boolean {
     return !vital.active;
+  }
+
+  filterTrendVitals = (vital: Vital): boolean => {
+    const result = this.trendFilter === 'all' || vital.category === this.trendFilter;
+    console.log(`filterTrendVitals(${vital.vitalName}): filter=${this.trendFilter}, category=${vital.category}, result=${result}`);
+    return result;
+  }
+
+  setTrendFilter(filter: 'all' | 'essential' | 'heart' | 'brain' | 'other'): void {
+    console.log('setTrendFilter called with:', filter);
+    this.ngZone.run(() => {
+      this.trendFilter = filter;
+      this.cdr.markForCheck();
+    });
   }
 
   onDragStart(event: DragEvent, vitalName: string): void {
